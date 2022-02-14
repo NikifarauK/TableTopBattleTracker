@@ -2,6 +2,8 @@
 
 namespace TableTopBattleTracker.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         public IActionResult Index()
