@@ -6,9 +6,6 @@ namespace TableTopBattleTracker.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return Ok();
-        }
+
     }
 }
