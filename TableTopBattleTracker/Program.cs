@@ -1,7 +1,6 @@
 using TableTopBattleTracker.Data;
-using Npgsql;
-using Npgsql.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TableTopBattleTracker.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(
         opt.UseNpgsql(builder.Configuration.GetConnectionString("PostgresSql"));
     });
 
+builder.Services.AddScoped<IRepository<Monster>, AppRepo<Monster>>();
 
 var app = builder.Build();
 

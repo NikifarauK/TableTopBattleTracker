@@ -11,8 +11,8 @@ using TableTopBattleTracker.Data;
 namespace TableTopBattleTracker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220217151022_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220218093941_MonsterIdToIntChange")]
+    partial class MonsterIdToIntChange
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,8 +25,11 @@ namespace TableTopBattleTracker.Migrations
 
             modelBuilder.Entity("TableTopBattleTracker.Model.Monster", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
