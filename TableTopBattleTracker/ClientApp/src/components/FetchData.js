@@ -29,7 +29,6 @@ export class FetchData extends Component {
               <td>{forecast.id}</td>
               <td>{forecast.name}</td>
               <td>{forecast.url}</td>
-              <td>{forecast.url}</td>
             </tr>
           )}
         </tbody>

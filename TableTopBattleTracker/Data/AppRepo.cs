@@ -11,7 +11,7 @@ namespace TableTopBattleTracker.Data
         public AppRepo(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-            _table = _dbContext.Set<T>();
+            _table = _dbContext?.Set<T>();
         }
         
         public void Create(T item)
