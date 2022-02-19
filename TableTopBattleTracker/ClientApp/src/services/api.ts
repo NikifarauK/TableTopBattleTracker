@@ -1,23 +1,24 @@
 
  class Service {
 
-_apiBase = "https://www.dnd5eapi.co/api/";
+     _apiBase = "/";//"https://www.dnd5eapi.co/api/";
 
  async getResource(url:string)  {
-     const res :Response= await fetch(`${this._apiBase}${url}`);
+     const res: Response = await fetch(`${this._apiBase}${url}`);
+     console.log("----------------------");
+     console.dir(res);
 
      if(!res.ok) {
          throw new Error ("Could not fetch"+`${res.status}`)
      } 
 
+     let t = await res.json();
 
-
- return await (res.json()); 
+ return t; 
 }
 
  async getMonstersList() {
-    const res= await this.getResource(`/monsters/`);
-    return (res.results);
+    return await this.getResource(`monsters/`);
 } 
 /* async getMonstersList() {
     const res= await axios.get(`${this._apiBase}/monsters/`) 
@@ -32,4 +33,4 @@ getMonster (index:string){
 
 
 }
-export default (new Service);
+export default (new Service());
