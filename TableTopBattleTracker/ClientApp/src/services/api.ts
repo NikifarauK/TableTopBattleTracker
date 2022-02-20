@@ -9,21 +9,42 @@ import {
 class Service {
   _apiBase = "https://www.dnd5eapi.co/api/";
 
+<<<<<<< HEAD
   async getResource(url: string) {
     const res: Response = await fetch(`${this._apiBase}${url}`);
 
     if (!res.ok) {
       throw new Error("Could not fetch" + `${res.status}`);
     }
+=======
+     _apiBase = "/";//"https://www.dnd5eapi.co/api/";
+
+ async getResource(url:string)  {
+     const res: Response = await fetch(`${this._apiBase}${url}`);
+     console.log("----------------------");
+     console.dir(res);
+>>>>>>> 0377e901591d27bb77b625d0e53b5003c76f2610
 
     return await res.json();
   }
 
+<<<<<<< HEAD
   async getMonstersList() {
     const res = await this.getResource(`/monsters/`);
     return res.results;
   }
   /* async getMonstersList() {
+=======
+     let t = await res.json();
+
+ return t; 
+}
+
+ async getMonstersList() {
+    return await this.getResource(`monsters/`);
+} 
+/* async getMonstersList() {
+>>>>>>> 0377e901591d27bb77b625d0e53b5003c76f2610
     const res= await axios.get(`${this._apiBase}/monsters/`) 
    console.log(res.data.results.results);
     
@@ -95,4 +116,12 @@ class Service {
     };
   }
 }
+<<<<<<< HEAD
 export default new Service();
+=======
+
+
+
+}
+export default (new Service());
+>>>>>>> 0377e901591d27bb77b625d0e53b5003c76f2610
