@@ -22,16 +22,16 @@ namespace TableTopBattleTracker.Controllers
         [HttpGet]
         public IEnumerable<Monster> Get()
         {
-            return _repository?.GetItems() ?? new[] {new Monster { Id=1, Name="Mock1", Url=@"/no"},
-                                                     new Monster { Id=2, Name="Mock2", Url=@"/no"},
-                                                     new Monster { Id=3, Name="Mock3", Url=@"/no"},};
+            return _repository?.GetItems() ?? new[] {new Monster { Index=1, Name="Mock1", Url=@"/no"},
+                                                     new Monster { Index=2, Name="Mock2", Url=@"/no"},
+                                                     new Monster { Index=3, Name="Mock3", Url=@"/no"},};
         }
 
         // GET api/<MonstersController>/5
         [HttpGet("{id}")]
         public Monster Get(int id)
         {
-            return _repository?.GetItem(id) ?? new Monster { Id = 1, Name = "Mock", Url = @"/no" };
+            return _repository?.GetItem(id) ?? new Monster { Index = 1, Name = "Mock", Url = @"/no" };
         }
 
     }

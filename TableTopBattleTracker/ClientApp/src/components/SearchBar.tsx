@@ -4,16 +4,15 @@ import Service from "../services/api";
 import {Form} from "react-bootstrap";
 import "./SearchBar.css"
 interface Moster {
-    id: string;
+    index: string;
     name: string;
     url: string;
 }
 
-<<<<<<< HEAD
 interface SearchProps{
-    changeHandler:React.ChangeEventHandler<HTMLSelectElement>;
+    changeHandler : React.ChangeEventHandler<HTMLSelectElement>;
 }
-const SearchBar:React.FC<SearchProps> =({changeHandler})=>{
+const SearchBar : React.FC<SearchProps> =({changeHandler})=>{
     const [list, setList] = useState<string>();
     const [lists,setLists] = useState();
    let monsters = null; 
@@ -41,7 +40,7 @@ const monstersList = async () =>{
     <option>Select monster</option>
    {lists} 
   </Form.Select>)
-=======
+/*
 const SearchBar: React.FC = () => {
     const [list, setList] = useState<string>();
     const [lists, setLists] = useState();
@@ -51,7 +50,7 @@ const SearchBar: React.FC = () => {
             const Arr = await Service.getMonstersList();
             setList(JSON.stringify(Arr))
             monsters = Arr.map((monster: Moster) => {
-                return (<p key={monster.id}> <a href={'https://dnd.su/' + monster.url} target="_blank">{monster.name}</a></p>)
+                return (<p key={monster.index}> <a href={'https://dnd.su/' + monster.url} target="_blank">{monster.name}</a></p>)
             })
             setLists(monsters)
         }
@@ -62,7 +61,7 @@ const SearchBar: React.FC = () => {
     }, [])
 
     return (<div>{lists}</div>)
->>>>>>> 0377e901591d27bb77b625d0e53b5003c76f2610
+    */
 }
 
 

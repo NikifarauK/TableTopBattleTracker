@@ -7,7 +7,8 @@ namespace TableTopBattleTracker.Model
     public class Monster
     {
         [Key]
-        public int Id { get; set; }
+        [Column("Id")]
+        public int Index { get; set; }
 
         [Required]
         public string? Name { get; set; }
