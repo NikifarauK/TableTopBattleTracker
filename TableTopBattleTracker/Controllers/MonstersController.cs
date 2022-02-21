@@ -18,13 +18,17 @@ namespace TableTopBattleTracker.Controllers
             _repository = repository;
         }
 
+        public record MonstersReturn(int count, IEnumerable<Monster> results);
+
         // GET: <MonstersController>
         [HttpGet]
-        public IEnumerable<Monster> Get()
+        public MonstersReturn Get()
         {
-            return _repository?.GetItems() ?? new[] {new Monster { Index=1, Name="Mock1", Url=@"/no"},
+            var res = _repository?.GetItems() ?? new[] {new Monster { Index=1, Name="Mock1", Url=@"/no"},
                                                      new Monster { Index=2, Name="Mock2", Url=@"/no"},
                                                      new Monster { Index=3, Name="Mock3", Url=@"/no"},};
+            return new(res.Count(), res);
+        
         }
 
         // GET api/<MonstersController>/5

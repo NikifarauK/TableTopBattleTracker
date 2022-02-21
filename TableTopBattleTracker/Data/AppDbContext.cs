@@ -11,6 +11,9 @@ namespace TableTopBattleTracker.Data
         {
         }
 
-        public DbSet<Monster> Monsters { get; set; }
+        public DbSet<Monster>? Monsters { get; set; }
+        public DbSet<DamageType>? DamageTypes { get; set; }
+
+        public DbSet<MonsterSize>? MonsterSizes { get; set; }
     }
 }
