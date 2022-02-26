@@ -5,7 +5,7 @@ namespace TableTopBattleTracker.Model
 {
     public enum ESpeedType : byte
     {
-        Walk,
+        Walk = 1,
         Fly,
         Swim,
         Climb
@@ -20,7 +20,7 @@ namespace TableTopBattleTracker.Model
         [StringLength(64)]
         public string? Name { get; set; }
 
-        private static List<string> _names { get; } = new List<string>
+        public static List<string> _names { get; } = new List<string>
         {
             "Обычная",
             "Летая",
@@ -29,6 +29,6 @@ namespace TableTopBattleTracker.Model
         };
 
         public static string NameById(ESpeedType eSpeedType)
-            => _names[(int)eSpeedType];
+            => _names[(int)eSpeedType - 1];
     }
 }

@@ -1,35 +1,35 @@
 ﻿
   export interface Character {
-    actions : Action[];//+
-    alignment : string;//+-
-    armorClass : number; //+
-    challengeRating : number;//+
-    charisma : number;//+
-    conditionImmunities : ConditionImmunity[];
-    constitution : number;//+
-    damageImmunities : string[];//+
-    damageResistances : string[];//+
-    damageVulnerabilities : string[];//+
-    dexterty : number;//+
-    hitDice : string;//+
-    hitPoints : string;//+
-    index : string;//+-
-    intelegence : number;//+
-    initiative : number;//+
-    languages : string;//+
-    legendaryActions : LegendaryAction[];
-    name : string;//+
+    actions : Action[];                         //+
+    alignment : string;                         //+-
+    armorClass : number;                        //+
+    challengeRating : number;                   //+
+    charisma : number;                          //+
+    conditionImmunities : ConditionImmunity[];  //+
+    constitution : number;                      //+
+    damageImmunities : string[];                //+
+    damageResistances : string[];               //+
+    damageVulnerabilities : string[];           //+
+    dexterty : number;                          //+
+    hitDice : string;                           //+
+    hitPoints : string;                         //+
+    index : string;                             //+-
+    intelegence : number;                       //+
+    initiative : number;                        //+
+    languages : string;                         //+
+    legendaryActions : LegendaryAction[];       //+
+    name : string;                              //+
     proficiences : Proficiency[];
-    senses : Senses;
-    size : string;//+
+    senses : Senses;                            //+
+    size : string;                              //+
     specialAbilities : SpecialAbility[];
-    speed : Speed;
-    strength : number;//+
-    subtype : null|string;
-    type : string;
-    url : string;//+
-    wisdom : number;//+
-    xp : number;//+
+    speed : Speed;                              //+-
+    strength : number;                          //+
+    subtype : null|string;                      //---
+    type : string;                              //+
+    url : string;                               //+
+    wisdom : number;                            //+
+    xp : number;                                //+
   }
 
   export interface Action {//+
@@ -55,6 +55,28 @@
     index : string;
     name : string;
     url : string;
+    //conditions:[
+    //    Blinded = 1,
+    //    Charmed,
+    //    Deafened,
+    //    Frightened,
+    //    Grappled,
+    //    Incapacitated,
+    //    Invisible,
+    //    Paralyzed,
+    //    Petrified,
+    //    Poisoned,
+    //    Prone,
+    //    Restrained,
+    //    Stunned,
+    //    Unconcious,
+    //    Exhaustion_1,
+    //    Exhaustion_2,
+    //    Exhaustion_3,
+    //    Exhaustion_4,
+    //    Exhaustion_5,
+    //    Exhaustion_6,
+    //]
   }
 
   export interface LegendaryAction{

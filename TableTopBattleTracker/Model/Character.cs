@@ -54,6 +54,7 @@ namespace TableTopBattleTracker.Model
 
         public ICollection<Language>? Languages { get; set; }
 
+        public ICollection<Sense>? Senses { get; set; }
 
         public ICollection<DamageImmunitie>? DamageImmunities { get; set; }
 
@@ -65,6 +66,9 @@ namespace TableTopBattleTracker.Model
 
         public ICollection<MultiAction>? MultiAction { get; set; }
 
+        public ICollection<Condition>? ConditionImmunity { get; set; }
+
+        public ICollection<LegendaryAction>? LegendaryActions { get; set; }
 
 
     }

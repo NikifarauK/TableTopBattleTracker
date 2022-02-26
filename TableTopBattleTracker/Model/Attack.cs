@@ -16,7 +16,7 @@ namespace TableTopBattleTracker.Model
         public int Distance { get; set; }
 
         public int Reach { get; set; }
-        public ECharacteristics? DCType { get; set; }
+        public ECharacteristic? DCType { get; set; }
 
         public string? Desc { get; set; }
 

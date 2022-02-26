@@ -48,7 +48,8 @@ namespace TableTopBattleTracker.Model
         };
 
         public static (string, float) ParamsById(EMonsterSize eMonsterSize)
-            => (Names[(int)eMonsterSize], Modifiers[(int)eMonsterSize]);
+            => (Names[(int)eMonsterSize - 1], Modifiers[(int)eMonsterSize - 1]);
 
+        public static MonsterSize Default 
     }
 }
