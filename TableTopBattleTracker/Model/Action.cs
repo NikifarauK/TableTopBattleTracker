@@ -3,20 +3,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TableTopBattleTracker.Model
 {
-    [Table("attack")]
-    public class Attack
+    [Table("action")]
+    public class Action
     {
-        public int AttackId { get; set; }
+        [Key]
+        public int ActionId { get; set; }
 
-        [StringLength(64)]
+        [MaxLength(64)]
         public string? Name { get; set; }
 
-        public DamageType? DamageType { get; set; }
+        public virtual ICollection<DamageType>? DamageType { get; set; }
 
         public int Distance { get; set; }
 
         public int Reach { get; set; }
-        public ECharacteristic? DCType { get; set; }
+
+        public virtual ICollection<Characteristic>? DCTypes { get; set; }
 
         public string? Desc { get; set; }
 

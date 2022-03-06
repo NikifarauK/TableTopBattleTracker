@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableTopBattleTracker", "TableTopBattleTracker\TableTopBattleTracker.csproj", "{02E5C380-308C-4DFB-A5C0-80719AB458FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableTopBattleTracker", "TableTopBattleTracker\TableTopBattleTracker.csproj", "{02E5C380-308C-4DFB-A5C0-80719AB458FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dndsuScraper", "dndsuScraper\dndsuScraper.csproj", "{8C1DBFF5-FB33-4217-A69F-F1A1C467CE89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{02E5C380-308C-4DFB-A5C0-80719AB458FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02E5C380-308C-4DFB-A5C0-80719AB458FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02E5C380-308C-4DFB-A5C0-80719AB458FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C1DBFF5-FB33-4217-A69F-F1A1C467CE89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C1DBFF5-FB33-4217-A69F-F1A1C467CE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C1DBFF5-FB33-4217-A69F-F1A1C467CE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C1DBFF5-FB33-4217-A69F-F1A1C467CE89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -28,17 +28,16 @@ namespace TableTopBattleTracker.Model
     }
 
 
-    [Table("condition")]
+    [Table("conditions")]
     public class Condition
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public ECondition ConditionId { get; set; }
 
-        [StringLength(64)]
+        [Required, MaxLength(16)]
         public string? Name { get; set; }
 
         public string? Desc { get; set; }
-
 
         public static List<string> Names { get; } = new()
         {

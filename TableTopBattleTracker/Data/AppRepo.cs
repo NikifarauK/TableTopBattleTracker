@@ -28,6 +28,11 @@ namespace TableTopBattleTracker.Data
             _table?.Remove(item);
         }
 
+        public IEnumerable<T>? GetByQuery(string query)
+        {
+            return _table?.FromSqlRaw(query);
+        }
+
         public T? GetItem(object id)
         {
             return _table?.Find(id);

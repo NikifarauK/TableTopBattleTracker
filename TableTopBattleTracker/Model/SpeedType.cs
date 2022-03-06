@@ -8,7 +8,8 @@ namespace TableTopBattleTracker.Model
         Walk = 1,
         Fly,
         Swim,
-        Climb
+        Climb,
+        Burrow,
     }
 
     [Table("speed_type")]
@@ -20,15 +21,16 @@ namespace TableTopBattleTracker.Model
         [StringLength(64)]
         public string? Name { get; set; }
 
-        public static List<string> _names { get; } = new List<string>
+        public static List<string> Names { get; } = new List<string>
         {
             "Обычная",
             "Летая",
             "Плавая",
             "Лазая",
+            "Копая",
         };
 
         public static string NameById(ESpeedType eSpeedType)
-            => _names[(int)eSpeedType - 1];
+            => Names[(int)eSpeedType - 1];
     }
 }

@@ -1,32 +1,37 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TableTopBattleTracker.Model
 {
     public enum ECharacteristic : byte
     {
-        Charisma = 1,
-        Constitution,
-        Dexterety,
-        Intelligence,
-        Strength,
-        Wisdom
+        Cha= 1,
+        Con,
+        Dex,
+        Int,
+        Str,
+        Wis
     }
+
     [Table("characteristics")]
     public class Characteristic
     {
         public ECharacteristic CharacteristicId { get; set; }
 
+        [Required, MaxLength(12)]
         public string? Name { get; set; }
+
+        public string? Desc { get; set; }
 
         [NotMapped]
         public static List<string> Names { get; } = new()
         {
-            "Харизма",
-            "Телосложение",
-            "Ловкость",
-            "Интеллект",
-            "Сила",
-            "Мудрость",
+            "Хар",
+            "Тел",
+            "Лов",
+            "Инт",
+            "Сил",
+            "Муд",
         };
 
         public static string? NameById(ECharacteristic eCharacteristics)

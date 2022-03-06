@@ -6,13 +6,13 @@ namespace TableTopBattleTracker.Model
     [Table("monster_senses")]
     public class MonsterSense
     {
-        [Key, Column(Order =1)]
+        [Key, Column(Order = 0)]
         public int CharacterId { get; set; }
 
-        [Key, Column(Order =2)]
+        [Key, Column(Order = 1)]
         public int SenseId{ get; set; }
 
-        public Sense? Sense { get; set; }
+        public virtual Sense? Sense { get; set; }
 
         public int Distance { get; set; }
 

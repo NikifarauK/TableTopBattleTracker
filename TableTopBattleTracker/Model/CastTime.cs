@@ -3,12 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TableTopBattleTracker.Model
 {
-    [Table("languages")]
-    public class Language
+    [Table("cast_time")]
+    public class CastTime
     {
-        public int LanguageId { get; set; }
-        
-        [Required]
+        [Key]
+        public int CastTimeId { get; set; }
+
+        [Required, MaxLength(64)]
         public string? Name { get; set; }
     }
 }

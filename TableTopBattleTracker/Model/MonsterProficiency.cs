@@ -3,15 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TableTopBattleTracker.Model
 {
-    [Table("damage_resistances")]
-    public class DamageResistance
+    [Table("monster_proficiency")]
+    public class MonsterProficiency
     {
         [Key, Column(Order = 0)]
         public int CharacterId { get; set; }
 
         [Key, Column(Order = 1)]
-        public EDamageType DamageTypeId{ get; set; }
+        public int ProficiencyId { get; set; }
 
-        public virtual DamageType? DamageType { get; set; }
+        public virtual Proficiency? Proficiency { get; set; }
+
+        public int Modifier { get; set; }
     }
 }

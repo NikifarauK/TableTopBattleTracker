@@ -50,6 +50,16 @@ namespace TableTopBattleTracker.Model
         public static (string, float) ParamsById(EMonsterSize eMonsterSize)
             => (Names[(int)eMonsterSize - 1], Modifiers[(int)eMonsterSize - 1]);
 
-        public static MonsterSize Default 
+        public static MonsterSize GetDefault()
+        {
+            var id = EMonsterSize.Medium;
+            var (name, spaceModifier) = MonsterSize.ParamsById(id);
+            return new MonsterSize()
+            {
+                MonsterSizeId = id,
+                Name = name,
+                SpaceModifier = spaceModifier,
+            };
+        }
     }
 }

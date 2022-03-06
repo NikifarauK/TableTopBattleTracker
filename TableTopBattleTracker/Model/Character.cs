@@ -9,22 +9,25 @@ namespace TableTopBattleTracker.Model
         [Key]
         public int CharacterId { get; set; }
 
-        [StringLength(128)]
+        [MaxLength(64)]
         public string? Name { get; set; }
 
-        public string? Url { get; set; }
+        //TODO: return $'/monsters/{CharacterId}'
+        //public string? Url { get; set; }
 
         public int ArmorClass { get; set; }
 
-        [StringLength(128)]
+        [MaxLength(128)]
         public string? Allignment { get; set; }
 
         public float ChallengeRating { get; set; }
 
-        [StringLength(16)]
+        [MaxLength(16)]
         public string? HitDice { get; set; }
 
-        public int HitPoints { get; set; }
+        public int InitialHitPoints { get; set; }
+        
+        public int CurrentHitPoints { get; set; }
 
         public int Charisma { get; set; }
 
@@ -40,35 +43,42 @@ namespace TableTopBattleTracker.Model
 
         public int Experience { get; set; }
 
+        public int ProficiencyBonus { get; set; }
+
         [NotMapped]
-        public int Initiative
+        public int InitiativeModifier
         {
-            get => (Dexterity - 10) / 2;
+            get => (Dexterity - 10) >> 1;
         }
 
         public MonsterType? MonsterType { get; set; }
-        public ICollection<MonsterSpeed>? Speeds { get; set; }
+
+        public virtual ICollection<MonsterSpeed>? Speeds { get; set; }
 
         public EMonsterSize MonsterSizeId { get; set; }
-        public MonsterSize? MonsterSize { get; set; }
+        public virtual MonsterSize? MonsterSize { get; set; }
 
-        public ICollection<Language>? Languages { get; set; }
+        public virtual ICollection<Language>? Languages { get; set; }
 
-        public ICollection<Sense>? Senses { get; set; }
+        public virtual ICollection<MonsterSense>? Senses { get; set; }
 
-        public ICollection<DamageImmunitie>? DamageImmunities { get; set; }
+        public virtual ICollection<DamageImmunitie>? DamageImmunities { get; set; }
 
-        public ICollection<DamageResistance>? DamageResistances { get; set; } 
+        public virtual ICollection<DamageResistance>? DamageResistances { get; set; } 
 
-        public ICollection<DamageVulnerabilitie>? DamageVulnerabilities { get; set; }
+        public virtual ICollection<DamageVulnerabilitie>? DamageVulnerabilities { get; set; }
 
-        public ICollection<MonsterAction>? MonsterActions { get; set; }
+        public virtual ICollection<MonsterAction>? MonsterActions { get; set; }
 
-        public ICollection<MultiAction>? MultiAction { get; set; }
+        public virtual ICollection<MultiAction>? MultiAction { get; set; }
 
-        public ICollection<Condition>? ConditionImmunity { get; set; }
+        public virtual ICollection<ConditionImmunity>? ConditionImmunities { get; set; }
 
-        public ICollection<LegendaryAction>? LegendaryActions { get; set; }
+        public virtual ICollection<LegendaryAction>? LegendaryActions { get; set; }
+
+        public virtual ICollection<MonsterProficiency>? Proficiencies { get; set; }
+
+        public virtual ICollection<SpecialAbility>? SpecialAbilities { get; set; }
 
 
     }

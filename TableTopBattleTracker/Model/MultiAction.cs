@@ -6,12 +6,12 @@ namespace TableTopBattleTracker.Model
     [Table("multiattack")]
     public class MultiAction
     {
-        [Key, Column(Order =1)]
+        [Key, Column(Order = 0)]
         public int CharacterId { get; set; }
 
-        [Key, Column(Order =2)]
+        [Key, Column(Order = 1)]
         public int MonsterActionId { get; set; }
-        public MonsterAction? MonsterAction { get; set; }
+        public virtual MonsterAction? MonsterAction { get; set; }
 
         public int Count { get; set; }
 

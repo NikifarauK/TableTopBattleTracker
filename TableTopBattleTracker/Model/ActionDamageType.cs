@@ -3,14 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TableTopBattleTracker.Model
 {
-    [Table("damage_resistances")]
-    public class DamageResistance
+    [Table("action_damage_types")]
+    public class ActionDamageType
     {
         [Key, Column(Order = 0)]
-        public int CharacterId { get; set; }
+        public int ActionId { get; set; }
 
         [Key, Column(Order = 1)]
-        public EDamageType DamageTypeId{ get; set; }
+        public EDamageType DamagetypeId { get; set; }
+
+        public virtual Action? Action { get; set; }
 
         public virtual DamageType? DamageType { get; set; }
     }

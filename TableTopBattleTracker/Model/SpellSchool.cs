@@ -3,12 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TableTopBattleTracker.Model
 {
-    [Table("languages")]
-    public class Language
+    [Table("spell_school")]
+    public class SpellSchool
     {
-        public int LanguageId { get; set; }
-        
+        [Key]
+        public int SpellSchoolId { get; set; }
+
         [Required]
         public string? Name { get; set; }
+
     }
 }

@@ -19,10 +19,10 @@
     languages : string;                         //+
     legendaryActions : LegendaryAction[];       //+
     name : string;                              //+
-    proficiences : Proficiency[];
+    proficiences : Proficiency[];               //+
     senses : Senses;                            //+
     size : string;                              //+
-    specialAbilities : SpecialAbility[];
+    specialAbilities : SpecialAbility[];        //+
     speed : Speed;                              //+-
     strength : number;                          //+
     subtype : null|string;                      //---
@@ -113,15 +113,15 @@
     times : number;
   }
   
-  export interface Spellcasting {
-    ability : Ability;
-    componentsRequired : string[];
-    dc : number;
-    level : number;
-    modifier : number;
-    school : string;
-    slots : Slots;
-    spells : Spell[];
+  export interface Spellcasting {               
+    ability : Ability;                          //+
+    componentsRequired : string[];              //+
+    dc : number;                                //+
+    level : number;                             //+
+    modifier : number;                          //+
+    school : string;                            //+
+    slots : Slots;                              //+
+    spells : Spell[];                           //+
   }
 
   export interface Ability {

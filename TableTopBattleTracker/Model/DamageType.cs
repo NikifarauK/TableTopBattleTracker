@@ -30,8 +30,6 @@ namespace TableTopBattleTracker.Model
         [StringLength(64)]
         public string? Name { get; set; } = null;
 
-
-        
         private static readonly List<string> _rus = new List<string>()
         {
             "Рубящий",
