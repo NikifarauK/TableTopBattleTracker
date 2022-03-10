@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using TableTopBattleTracker.Data;
+using Microsoft.EntityFrameworkCore;
 using TableTopBattleTracker.Model;
 
 namespace dndsuScraper;
@@ -26,8 +27,8 @@ public class SpellParser : BaseParser
             Console.WriteLine($"DC:\t{spell.DC},\t{spell.SpellDamage?.FirstOrDefault()?.DamageType?.Name},\t{spell.SpellDamage?.FirstOrDefault()?.SpellDamageValues?.FirstOrDefault()?.Value}");
             Console.WriteLine();
             _dbContext.Spells?.Add(spell);
+            await _dbContext.SaveChangesAsync();
         }
-        await _dbContext.SaveChangesAsync();
 
     }
 
@@ -141,13 +142,13 @@ public class SpellParser : BaseParser
             case EDamageType.Acid:
             case EDamageType.Radiant:
             case EDamageType.Psichic:
+            case EDamageType.Necrotic:
                 damReg = new(@$"урона? {dtStr.ToLower()[..^2]}.{"{0,}"} \d+к\d+");
                 damRegRev = new(@$"\d+к\d+ урона? {dtStr.ToLower()[..^2]}");
                 break;
             case EDamageType.Slashing:
             case EDamageType.Bludgeoning:
             case EDamageType.Piercing:
-            case EDamageType.Necrotic:
                 damReg = new(@$"{dtStr.ToLower()[..^2]}[а-я][а-я].? урон.+ \d+к\d+");
                 damRegRev = new(@$"\d+к\d+ {dtStr.ToLower()[..^2]}[а-я][а-я].? урон.+");
                 break;
@@ -397,7 +398,8 @@ public class SpellParser : BaseParser
     {
         var castRangeName = str.Split(":")[1].Trim();
         castRangeName = castRangeName.Length < 64 ? castRangeName : castRangeName[0..64];
-        var castRange = _dbContext.CastRanges?.FirstOrDefault(cr => cr.Name == castRangeName);
+        var castRange = _dbContext.CastRanges?.Where(cr => string.Equals(cr.Name, castRangeName))
+            .FirstOrDefault();
         spell.CastRange = castRange ?? new CastRange() { Name = castRangeName };
     }
 
@@ -405,7 +407,13 @@ public class SpellParser : BaseParser
     {
         var castTimeName = parNode.Split(":")[1].Trim();
         castTimeName = castTimeName.Length < 64 ? castTimeName : castTimeName[0..64];
-        var castTime = _dbContext.CastTimes?.FirstOrDefault(castTime => castTime.Name == castTimeName);
+        var castTime = _dbContext.CastTimes?
+            .Where(castTime => string.Equals(castTime.Name, castTimeName))
+            .FirstOrDefault();
+        if(castTime != null)
+        {
+            Console.WriteLine(castTime.Name);
+        }
         spell.CastTime = castTime ?? new CastTime() { Name = castTimeName };
     }
 
@@ -420,24 +428,26 @@ public class SpellParser : BaseParser
 
     private void SetSpellSchoool(ref Spell spell, string str)
     {
-        var schoolName = str.Split(",")[1];
-        var school = _dbContext.SpellSchools?.FirstOrDefault(school => school.Name == school.Name);
+        var schoolName = str.Split(",")[1].Trim();
+        var school = _dbContext.SpellSchools?
+            .Where(school => string.Equals(school.Name, schoolName))
+            .FirstOrDefault();
         spell.SpellSchool = school ?? new SpellSchool() { Name = schoolName };
     }
 
-    void SeedBaseTables()
+    public void SeedBaseTables()
     {
-        /*
+
         var ae = new List<AreaOfEffect>();
-        foreach(var id in Enum.GetValues(typeof(EAreaType)))
+        foreach (var id in Enum.GetValues(typeof(EAreaType)))
         {
             ae.Add(new AreaOfEffect()
             {
                 AreaOfEffectId = (EAreaType)id,
-                Name = AreaOfEffect.GetNameById((EAreaType) id),
+                Name = AreaOfEffect.GetNameById((EAreaType)id),
             });
         }
-        dbContext.AreaOfEffects.AddRange(ae);
+        _dbContext.AreaOfEffects?.AddRange(ae);
         var cc = new List<CastingComponent>();
         foreach (var id in Enum.GetValues(typeof(ECastingComponent)))
         {
@@ -447,7 +457,7 @@ public class SpellParser : BaseParser
                 Name = CastingComponent.GetNameById((ECastingComponent)id)
             });
         }
-        dbContext.CastingComponents.AddRange(cc);
+        _dbContext.CastingComponents?.AddRange(cc);
 
         var ch = new List<Characteristic>();
         foreach (var id in Enum.GetValues(typeof(ECharacteristic)))
@@ -458,7 +468,7 @@ public class SpellParser : BaseParser
                 Name = Characteristic.GetNameById((ECharacteristic)id),
             });
         }
-        dbContext.Characteristics.AddRange(ch);
+        _dbContext.Characteristics?.AddRange(ch);
 
         var co = new List<Condition>();
         foreach (var id in Enum.GetValues(typeof(ECondition)))
@@ -469,7 +479,7 @@ public class SpellParser : BaseParser
                 Name = Condition.GetNameById((ECondition)id),
             });
         }
-        dbContext.Conditions.AddRange(co);
+        _dbContext.Conditions?.AddRange(co);
 
         var dt = new List<DamageType>();
         foreach (var id in Enum.GetValues(typeof(EDamageType)))
@@ -480,7 +490,7 @@ public class SpellParser : BaseParser
                 Name = DamageType.GetNameById((EDamageType)id),
             });
         }
-        dbContext.DamageTypes.AddRange(dt);
+        _dbContext.DamageTypes?.AddRange(dt);
 
         var mt = new List<MonsterSize>();
         foreach (var id in Enum.GetValues(typeof(EMonsterSize)))
@@ -493,7 +503,7 @@ public class SpellParser : BaseParser
                 SpaceModifier = mod,
             });
         }
-        dbContext.MonsterSizes.AddRange(mt);
+        _dbContext.MonsterSizes?.AddRange(mt);
 
         var sl = new List<Slot>();
         foreach (var id in Enum.GetValues(typeof(ESpellLelel)))
@@ -504,7 +514,7 @@ public class SpellParser : BaseParser
                 Name = Slot.GetNameById((ESpellLelel)id),
             });
         }
-        dbContext.Slots.AddRange(sl);
+        _dbContext.Slots?.AddRange(sl);
 
         var st = new List<SpeedType>();
         foreach (var id in Enum.GetValues(typeof(ESpeedType)))
@@ -515,12 +525,12 @@ public class SpellParser : BaseParser
                 Name = SpeedType.GetNameById((ESpeedType)id),
             });
         }
-        dbContext.SpeedTypes.AddRange(st);
+        _dbContext.SpeedTypes?.AddRange(st);
 
 
 
-        dbContext.SaveChanges();
-        */
+        _dbContext.SaveChanges();
+
     }
 
 }

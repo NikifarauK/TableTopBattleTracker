@@ -70,6 +70,15 @@ namespace TableTopBattleTracker.Data
                 .HasMany(s => s.CastingComponents)
                 .WithMany(cc => cc.Spells)
                 .UsingEntity<SpellCastingComponent>();
+            modelBuilder.Entity<Spell>()
+                .HasOne(s => s.SpellSchool)
+                .WithMany();
+            modelBuilder.Entity<Spell>()
+                .HasOne(s => s.CastRange)
+                .WithMany();
+            modelBuilder.Entity<Spell>()
+                .HasOne(s=> s.CastTime)
+                .WithMany();
 
             modelBuilder.Entity<ActionDamageType>()
                 .HasKey(adt => new { adt.ActionId, adt.DamagetypeId });

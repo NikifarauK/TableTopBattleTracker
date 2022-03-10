@@ -8,7 +8,8 @@ var opt = optionsBuilder.UseNpgsql("Server=127.0.0.1;Port=5432;Database=BattleTr
 
 using (var dbContext = new AppDbContext(opt))
 {
+    dbContext.Database.EnsureCreated();
     var spellParser = new SpellParser(dbContext);
-    //SeedBaseTables(dbContext);
+    spellParser.SeedBaseTables();
     await spellParser.CollectSpells();
 }
