@@ -47,13 +47,13 @@ namespace TableTopBattleTracker.Model
             4.0f,
         };
 
-        public static (string, float) ParamsById(EMonsterSize eMonsterSize)
+        public static (string, float) GetParamsById(EMonsterSize eMonsterSize)
             => (Names[(int)eMonsterSize - 1], Modifiers[(int)eMonsterSize - 1]);
 
         public static MonsterSize GetDefault()
         {
             var id = EMonsterSize.Medium;
-            var (name, spaceModifier) = MonsterSize.ParamsById(id);
+            var (name, spaceModifier) = MonsterSize.GetParamsById(id);
             return new MonsterSize()
             {
                 MonsterSizeId = id,

@@ -30,7 +30,7 @@ namespace TableTopBattleTracker.Model
             "Копая",
         };
 
-        public static string NameById(ESpeedType eSpeedType)
+        public static string GetNameById(ESpeedType eSpeedType)
             => Names[(int)eSpeedType - 1];
     }
 }

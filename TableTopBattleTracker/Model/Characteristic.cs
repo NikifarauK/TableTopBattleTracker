@@ -23,6 +23,8 @@ namespace TableTopBattleTracker.Model
 
         public string? Desc { get; set; }
 
+        public ICollection<Action>? Actions { get; set; }
+
         [NotMapped]
         public static List<string> Names { get; } = new()
         {
@@ -34,7 +36,7 @@ namespace TableTopBattleTracker.Model
             "Муд",
         };
 
-        public static string? NameById(ECharacteristic eCharacteristics)
+        public static string GetNameById(ECharacteristic eCharacteristics)
             => Names[(int)eCharacteristics - 1];
     }
 }

@@ -18,6 +18,7 @@ namespace TableTopBattleTracker.Model
         Psichic,
         Necrotic,
         Radiant,
+        Healing,
     }
     
     [Table("damage_types")]
@@ -30,12 +31,15 @@ namespace TableTopBattleTracker.Model
         [StringLength(64)]
         public string? Name { get; set; } = null;
 
-        private static readonly List<string> _rus = new List<string>()
+        public virtual ICollection<Action>? Actions { get; set; }
+
+
+        public static List<string> Names { get; } = new()
         {
             "Рубящий",
             "Дробящий",
             "Колющий",
-            "Силой",
+            "Силовым полем",
             "Огнем",
             "Холодом",
             "Молния",
@@ -44,14 +48,15 @@ namespace TableTopBattleTracker.Model
             "Кислотой",
             "Психический",
             "Некротический",
-            "Энергией",
+            "Излучением",
+            "Лечение",
         };
 
-        public static string GetRusString(EDamageType damageType)
-            => _rus[(int)damageType];
+        public static string GetNameById(EDamageType damageType)
+            => Names[(int)damageType - 1];
 
         public static EDamageType? GetDamageType(string damageTypeString)
-            => (EDamageType?)(_rus.IndexOf(damageTypeString) + 1);
+            => (EDamageType?)(Names.IndexOf(damageTypeString) + 1);
 
     }
 }

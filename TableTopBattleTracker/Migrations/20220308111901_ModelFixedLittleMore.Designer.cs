@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TableTopBattleTracker.Data;
@@ -11,9 +12,10 @@ using TableTopBattleTracker.Data;
 namespace TableTopBattleTracker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220308111901_ModelFixedLittleMore")]
+    partial class ModelFixedLittleMore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -685,7 +687,7 @@ namespace TableTopBattleTracker.Migrations
                     b.Property<int>("CastTimeId")
                         .HasColumnType("integer");
 
-                    b.Property<byte?>("DC")
+                    b.Property<byte>("DC")
                         .HasColumnType("smallint");
 
                     b.Property<string>("Desc")
@@ -713,6 +715,9 @@ namespace TableTopBattleTracker.Migrations
                         .HasMaxLength(96)
                         .HasColumnType("character varying(96)");
 
+                    b.Property<int>("SpellDamageId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("SpellSchoolId")
                         .HasColumnType("integer");
 
@@ -723,6 +728,8 @@ namespace TableTopBattleTracker.Migrations
                     b.HasIndex("CastRangeId");
 
                     b.HasIndex("CastTimeId");
+
+                    b.HasIndex("SpellDamageId");
 
                     b.HasIndex("SpellSchoolId");
 
@@ -821,18 +828,19 @@ namespace TableTopBattleTracker.Migrations
 
             modelBuilder.Entity("TableTopBattleTracker.Model.SpellDamage", b =>
                 {
-                    b.Property<int>("SpellId")
-                        .HasColumnType("integer")
-                        .HasColumnOrder(0);
+                    b.Property<int>("SpellDamageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SpellDamageId"));
 
                     b.Property<byte>("DamageTypeId")
-                        .HasColumnType("smallint")
-                        .HasColumnOrder(1);
+                        .HasColumnType("smallint");
 
                     b.Property<int>("IncreaseType")
                         .HasColumnType("integer");
 
-                    b.HasKey("SpellId", "DamageTypeId");
+                    b.HasKey("SpellDamageId");
 
                     b.HasIndex("DamageTypeId");
 
@@ -841,24 +849,20 @@ namespace TableTopBattleTracker.Migrations
 
             modelBuilder.Entity("TableTopBattleTracker.Model.SpellDamageValue", b =>
                 {
-                    b.Property<int>("SpellId")
+                    b.Property<int>("SpellDamageId")
                         .HasColumnType("integer")
                         .HasColumnOrder(0);
 
-                    b.Property<byte>("DamageTypeId")
-                        .HasColumnType("smallint")
-                        .HasColumnOrder(1);
-
                     b.Property<int>("Level")
                         .HasColumnType("integer")
-                        .HasColumnOrder(2);
+                        .HasColumnOrder(1);
 
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("character varying(8)");
 
-                    b.HasKey("SpellId", "DamageTypeId", "Level");
+                    b.HasKey("SpellDamageId", "Level");
 
                     b.ToTable("spell_damage_values");
                 });
@@ -1177,6 +1181,12 @@ namespace TableTopBattleTracker.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TableTopBattleTracker.Model.SpellDamage", "SpellDamage")
+                        .WithMany()
+                        .HasForeignKey("SpellDamageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TableTopBattleTracker.Model.SpellSchool", "SpellSchool")
                         .WithMany()
                         .HasForeignKey("SpellSchoolId")
@@ -1188,6 +1198,8 @@ namespace TableTopBattleTracker.Migrations
                     b.Navigation("CastRange");
 
                     b.Navigation("CastTime");
+
+                    b.Navigation("SpellDamage");
 
                     b.Navigation("SpellSchool");
                 });
@@ -1264,22 +1276,14 @@ namespace TableTopBattleTracker.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TableTopBattleTracker.Model.Spell", "Spell")
-                        .WithMany("SpellDamage")
-                        .HasForeignKey("SpellId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("DamageType");
-
-                    b.Navigation("Spell");
                 });
 
             modelBuilder.Entity("TableTopBattleTracker.Model.SpellDamageValue", b =>
                 {
                     b.HasOne("TableTopBattleTracker.Model.SpellDamage", null)
                         .WithMany("SpellDamageValues")
-                        .HasForeignKey("SpellId", "DamageTypeId")
+                        .HasForeignKey("SpellDamageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1307,11 +1311,6 @@ namespace TableTopBattleTracker.Migrations
                     b.Navigation("SpecialAbilities");
 
                     b.Navigation("Speeds");
-                });
-
-            modelBuilder.Entity("TableTopBattleTracker.Model.Spell", b =>
-                {
-                    b.Navigation("SpellDamage");
                 });
 
             modelBuilder.Entity("TableTopBattleTracker.Model.Spellcasting", b =>

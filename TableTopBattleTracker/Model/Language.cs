@@ -10,5 +10,7 @@ namespace TableTopBattleTracker.Model
         
         [Required]
         public string? Name { get; set; }
+
+        public ICollection<Character>? Characters { get; set; }
     }
 }

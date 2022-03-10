@@ -19,7 +19,7 @@ namespace TableTopBattleTracker.Model
         [Required, MaxLength(64)]
         public string? Name { get; set; }
 
-
+        public ICollection<Spell>? Spells { get; set; }
         public static List<string> Names { get; } = new()
         {
             "Вербальный",

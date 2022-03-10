@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TableTopBattleTracker.Data;
@@ -11,9 +12,10 @@ using TableTopBattleTracker.Data;
 namespace TableTopBattleTracker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220308120442_MultipleDamageTypesInSpell")]
+    partial class MultipleDamageTypesInSpell
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -685,7 +687,7 @@ namespace TableTopBattleTracker.Migrations
                     b.Property<int>("CastTimeId")
                         .HasColumnType("integer");
 
-                    b.Property<byte?>("DC")
+                    b.Property<byte>("DC")
                         .HasColumnType("smallint");
 
                     b.Property<string>("Desc")
@@ -1265,7 +1267,7 @@ namespace TableTopBattleTracker.Migrations
                         .IsRequired();
 
                     b.HasOne("TableTopBattleTracker.Model.Spell", "Spell")
-                        .WithMany("SpellDamage")
+                        .WithMany("SpellDamages")
                         .HasForeignKey("SpellId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1311,7 +1313,7 @@ namespace TableTopBattleTracker.Migrations
 
             modelBuilder.Entity("TableTopBattleTracker.Model.Spell", b =>
                 {
-                    b.Navigation("SpellDamage");
+                    b.Navigation("SpellDamages");
                 });
 
             modelBuilder.Entity("TableTopBattleTracker.Model.Spellcasting", b =>

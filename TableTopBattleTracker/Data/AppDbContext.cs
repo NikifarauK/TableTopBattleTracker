@@ -38,6 +38,9 @@ namespace TableTopBattleTracker.Data
         public DbSet<MultiAction>? MultiActions { get; set; }
         public DbSet<Proficiency>? Proficiencies { get; set; }
         public DbSet<Sense>? Senses { get; set; }
+        public DbSet<Slot>? Slots{ get; set; }
+        public DbSet<SpecialAbility>? SpecialAbilities{ get; set; }
+        public DbSet<SpeedType>? SpeedTypes { get; set; }
         public DbSet<Spell>? Spells { get; set; }
         public DbSet<Spellcasting>? Spellcastings { get; set; }
         public DbSet<SpellCastingComponent>? SpellCastingComponents { get; set; }
@@ -51,6 +54,23 @@ namespace TableTopBattleTracker.Data
 #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Model.Action>()
+                .HasMany(a => a.DamageType)
+                .WithMany(d => d.Actions)
+                .UsingEntity<ActionDamageType>();
+            modelBuilder.Entity<Model.Action>()
+                .HasMany(a => a.DCTypes)
+                .WithMany(c => c.Actions)
+                .UsingEntity<ActionDCType>();
+            modelBuilder.Entity<Character>()
+                .HasMany(c => c.Languages)
+                .WithMany(la => la.Characters)
+                .UsingEntity<MonsterLanguage>();
+            modelBuilder.Entity<Spell>()
+                .HasMany(s => s.CastingComponents)
+                .WithMany(cc => cc.Spells)
+                .UsingEntity<SpellCastingComponent>();
+
             modelBuilder.Entity<ActionDamageType>()
                 .HasKey(adt => new { adt.ActionId, adt.DamagetypeId });
             modelBuilder.Entity<ActionDCType>()
@@ -84,8 +104,11 @@ namespace TableTopBattleTracker.Data
                 .HasKey(ss => new { ss.SpellcastingId, ss.SlotId });
             modelBuilder.Entity<SpellcastingSpell>()
                 .HasKey(ss => new { ss.SpellId, ss.SpellcastingId });
+
+            modelBuilder.Entity<SpellDamage>()
+                .HasKey(sd => new { sd.SpellId, sd.DamageTypeId });
             modelBuilder.Entity<SpellDamageValue>()
-                .HasKey(sv => new { sv.SpellDamageId, sv.Level });
+                .HasKey(sv => new { sv.SpellId,sv.DamageTypeId, sv.Level });
         }
 
     }

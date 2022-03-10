@@ -5,17 +5,20 @@ namespace TableTopBattleTracker.Model
 {
     public enum EIncreaseType
     {
-        OnCharacterLevel = 1,
+        None,
+        OnCharacterLevel,
         OnSpellSlot,
     }
 
 
     [Table("spell_damages")]
     public class SpellDamage
-    {
-        [Key]
-        public int SpellDamageId { get; set; }
-
+    {        
+        [Key, Column(Order = 0)]
+        public int SpellId { get; set; }
+        public Spell? Spell { get; set; }
+        
+        [Key, Column(Order = 1)]
         public EDamageType DamageTypeId { get; set; }
         public virtual DamageType? DamageType { get; set; }
 

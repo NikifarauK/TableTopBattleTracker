@@ -36,16 +36,14 @@ namespace TableTopBattleTracker.Model
         [MaxLength(64)]
         public string? Duration { get; set; }
 
-        public ECharacteristic DC { get; set; }
+        public ECharacteristic? DC { get; set; }
 
-        [ForeignKey(nameof(SpellDamage))]
-        public int SpellDamageId { get; set; }
-        public virtual SpellDamage? SpellDamage { get; set; }
+        public virtual ICollection<SpellDamage>? SpellDamage { get; set; }
 
-        public int AreaOfEffectId{ get; set; }
+        public EAreaType? AreaOfEffectId{ get; set; }
         public virtual AreaOfEffect? AreaOfEffect { get; set; }
 
-        public int AreasSize { get; set; }
+        public int? AreasSize { get; set; }
 
         [ForeignKey(nameof(SpellSchool))]
         public int SpellSchoolId { get; set; }
