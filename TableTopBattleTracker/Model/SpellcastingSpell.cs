@@ -12,6 +12,9 @@ namespace TableTopBattleTracker.Model
         [Key, Column(Order = 1)]
         public int SpellcastingId { get; set; }
 
+        [ForeignKey(nameof(SpellId))]
+        public virtual Spell? Spell { get; set; }
+
         [Required]
         public int UsageId { get; set; }
         public virtual Usage? Usage { get; set; }

@@ -3,19 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TableTopBattleTracker.Model
 {
-    [Table("languages")]
-    public class Language
+    [Table("allignment")]
+    public class Allignment
     {
-        public int LanguageId { get; set; }
-        
+        public int AllignmentId { get; set; }
+
         [Required]
         public string? Name { get; set; }
 
-        public ICollection<Character>? Characters { get; set; }
-
         public override string ToString()
         {
-            return Name ?? nameof(Language);
+            return Name ?? nameof(Allignment);
         }
     }
 }

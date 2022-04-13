@@ -22,9 +22,6 @@ namespace TableTopBattleTracker.Model
 
         public int Modifier { get; set; }
 
-        [MaxLength(64)]
-        public string? School { get; set; }
-
         public virtual ICollection<SpellcastingSpell>? Spells { get; set; }
     }
 }

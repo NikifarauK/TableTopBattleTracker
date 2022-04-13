@@ -33,10 +33,15 @@ namespace TableTopBattleTracker.Model
             "Лов",
             "Инт",
             "Сил",
-            "Муд",
+            "Мдр",
         };
 
         public static string GetNameById(ECharacteristic eCharacteristics)
             => Names[(int)eCharacteristics - 1];
+
+        public override string ToString()
+        {
+            return Name ?? nameof(Characteristic);
+        }
     }
 }

@@ -24,7 +24,7 @@ public class SpellParser : BaseParser
             var spell = await GetSpellFromUri(new Uri(_baseLink + GetLinkFromNode(liWithLink)));
             Console.Write($"[{i++}]lvl:\t{spell.Level},\t{spell.AreaOfEffect?.Name}:\t{spell.AreasSize},\t");
             Console.WriteLine($"ct:\t{spell.CastTime?.Name},\tdist:\t{spell.CastRange?.Name}");
-            Console.WriteLine($"DC:\t{spell.DC},\t{spell.SpellDamage?.FirstOrDefault()?.DamageType?.Name},\t{spell.SpellDamage?.FirstOrDefault()?.SpellDamageValues?.FirstOrDefault()?.Value}");
+            Console.WriteLine($"DC:\t{spell.DC},\t{spell.SpellDamages?.FirstOrDefault()?.DamageType?.Name},\t{spell.SpellDamages?.FirstOrDefault()?.SpellDamageValues?.FirstOrDefault()?.Value}");
             Console.WriteLine();
             _dbContext.Spells?.Add(spell);
             await _dbContext.SaveChangesAsync();
@@ -32,7 +32,7 @@ public class SpellParser : BaseParser
 
     }
 
-    async Task<Spell> GetSpellFromUri(Uri uri)
+    public async Task<Spell> GetSpellFromUri(Uri uri)
     {
         await Task.Delay(50);
         var doc = await GetDocumentAsync(uri);
@@ -117,7 +117,7 @@ public class SpellParser : BaseParser
         }
         if (spellDamages.Count > 0)
             SetBiggerLevelDamages(ref spellDamages, lvl, str);
-        spell.SpellDamage = spellDamages;
+        spell.SpellDamages = spellDamages;
     }
 
     private static void ChooseRegexForDamageType(string str, EDamageType dt, out string dtStr, out Match matched)
@@ -433,104 +433,6 @@ public class SpellParser : BaseParser
             .Where(school => string.Equals(school.Name, schoolName))
             .FirstOrDefault();
         spell.SpellSchool = school ?? new SpellSchool() { Name = schoolName };
-    }
-
-    public void SeedBaseTables()
-    {
-
-        var ae = new List<AreaOfEffect>();
-        foreach (var id in Enum.GetValues(typeof(EAreaType)))
-        {
-            ae.Add(new AreaOfEffect()
-            {
-                AreaOfEffectId = (EAreaType)id,
-                Name = AreaOfEffect.GetNameById((EAreaType)id),
-            });
-        }
-        _dbContext.AreaOfEffects?.AddRange(ae);
-        var cc = new List<CastingComponent>();
-        foreach (var id in Enum.GetValues(typeof(ECastingComponent)))
-        {
-            cc.Add(new CastingComponent()
-            {
-                CastingComponentId = (ECastingComponent)id,
-                Name = CastingComponent.GetNameById((ECastingComponent)id)
-            });
-        }
-        _dbContext.CastingComponents?.AddRange(cc);
-
-        var ch = new List<Characteristic>();
-        foreach (var id in Enum.GetValues(typeof(ECharacteristic)))
-        {
-            ch.Add(new Characteristic()
-            {
-                CharacteristicId = (ECharacteristic)id,
-                Name = Characteristic.GetNameById((ECharacteristic)id),
-            });
-        }
-        _dbContext.Characteristics?.AddRange(ch);
-
-        var co = new List<Condition>();
-        foreach (var id in Enum.GetValues(typeof(ECondition)))
-        {
-            co.Add(new Condition()
-            {
-                ConditionId = (ECondition)id,
-                Name = Condition.GetNameById((ECondition)id),
-            });
-        }
-        _dbContext.Conditions?.AddRange(co);
-
-        var dt = new List<DamageType>();
-        foreach (var id in Enum.GetValues(typeof(EDamageType)))
-        {
-            dt.Add(new DamageType()
-            {
-                DamageTypeId = (EDamageType)id,
-                Name = DamageType.GetNameById((EDamageType)id),
-            });
-        }
-        _dbContext.DamageTypes?.AddRange(dt);
-
-        var mt = new List<MonsterSize>();
-        foreach (var id in Enum.GetValues(typeof(EMonsterSize)))
-        {
-            var (name, mod) = MonsterSize.GetParamsById((EMonsterSize)id);
-            mt.Add(new MonsterSize()
-            {
-                MonsterSizeId = (EMonsterSize)id,
-                Name = name,
-                SpaceModifier = mod,
-            });
-        }
-        _dbContext.MonsterSizes?.AddRange(mt);
-
-        var sl = new List<Slot>();
-        foreach (var id in Enum.GetValues(typeof(ESpellLelel)))
-        {
-            sl.Add(new Slot()
-            {
-                SlotId = (ESpellLelel)id,
-                Name = Slot.GetNameById((ESpellLelel)id),
-            });
-        }
-        _dbContext.Slots?.AddRange(sl);
-
-        var st = new List<SpeedType>();
-        foreach (var id in Enum.GetValues(typeof(ESpeedType)))
-        {
-            st.Add(new SpeedType()
-            {
-                SpeedTypeId = (ESpeedType)id,
-                Name = SpeedType.GetNameById((ESpeedType)id),
-            });
-        }
-        _dbContext.SpeedTypes?.AddRange(st);
-
-
-
-        _dbContext.SaveChanges();
-
     }
 
 }

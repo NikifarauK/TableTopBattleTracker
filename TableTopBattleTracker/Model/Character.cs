@@ -17,8 +17,7 @@ namespace TableTopBattleTracker.Model
 
         public int ArmorClass { get; set; }
 
-        [MaxLength(128)]
-        public string? Allignment { get; set; }
+        public Allignment? Allignment { get; set; }
 
         public float ChallengeRating { get; set; }
 
@@ -72,7 +71,7 @@ namespace TableTopBattleTracker.Model
 
         public virtual ICollection<MultiAction>? MultiAction { get; set; }
 
-        public virtual ICollection<ConditionImmunity>? ConditionImmunities { get; set; }
+        public virtual ICollection<Condition>? ConditionImmunities { get; set; }
 
         public virtual ICollection<LegendaryAction>? LegendaryActions { get; set; }
 
@@ -80,6 +79,9 @@ namespace TableTopBattleTracker.Model
 
         public virtual ICollection<SpecialAbility>? SpecialAbilities { get; set; }
 
-
+        public override string ToString()
+        {
+            return Name ?? nameof(Character);
+        }
     }
 }

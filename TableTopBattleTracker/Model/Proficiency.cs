@@ -19,5 +19,9 @@ namespace TableTopBattleTracker.Model
                 _ => throw new ArgumentException("Wrong name prefics char"),
             };
 
+        public override string ToString()
+        {
+            return Name ?? nameof(Proficiency);
+        }
     }
 }

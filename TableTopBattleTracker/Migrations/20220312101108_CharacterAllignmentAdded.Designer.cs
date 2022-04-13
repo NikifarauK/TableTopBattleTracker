@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TableTopBattleTracker.Data;
@@ -11,9 +12,10 @@ using TableTopBattleTracker.Data;
 namespace TableTopBattleTracker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220312101108_CharacterAllignmentAdded")]
+    partial class CharacterAllignmentAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -647,9 +649,6 @@ namespace TableTopBattleTracker.Migrations
                     b.Property<int?>("CharacterId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Desc")
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -658,7 +657,7 @@ namespace TableTopBattleTracker.Migrations
                     b.Property<int?>("SpellcastingId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UsageId")
+                    b.Property<int>("UsageId")
                         .HasColumnType("integer");
 
                     b.HasKey("SpecialAbilityId");
@@ -769,6 +768,10 @@ namespace TableTopBattleTracker.Migrations
 
                     b.Property<int>("Modifier")
                         .HasColumnType("integer");
+
+                    b.Property<string>("School")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
                     b.HasKey("SpellcastingId");
 
@@ -905,7 +908,7 @@ namespace TableTopBattleTracker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UsageId"));
 
-                    b.Property<int?>("Times")
+                    b.Property<int>("Times")
                         .HasColumnType("integer");
 
                     b.Property<string>("Type")
@@ -1173,7 +1176,9 @@ namespace TableTopBattleTracker.Migrations
 
                     b.HasOne("TableTopBattleTracker.Model.Usage", "Usage")
                         .WithMany()
-                        .HasForeignKey("UsageId");
+                        .HasForeignKey("UsageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Spellcasting");
 

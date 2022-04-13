@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TableTopBattleTracker.Data;
@@ -11,9 +12,10 @@ using TableTopBattleTracker.Data;
 namespace TableTopBattleTracker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220406100624_SpellcastingSlotUsageNoSchoolNoAbilityValue")]
+    partial class SpellcastingSlotUsageNoSchoolNoAbilityValue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -804,12 +806,14 @@ namespace TableTopBattleTracker.Migrations
                         .HasColumnType("smallint")
                         .HasColumnOrder(1);
 
-                    b.Property<int>("Times")
+                    b.Property<int?>("UsageId")
                         .HasColumnType("integer");
 
                     b.HasKey("SpellcastingId", "SlotId");
 
                     b.HasIndex("SlotId");
+
+                    b.HasIndex("UsageId");
 
                     b.ToTable("spellcasting_slots");
                 });
@@ -905,7 +909,7 @@ namespace TableTopBattleTracker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UsageId"));
 
-                    b.Property<int?>("Times")
+                    b.Property<int>("Times")
                         .HasColumnType("integer");
 
                     b.Property<string>("Type")
@@ -1257,7 +1261,13 @@ namespace TableTopBattleTracker.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TableTopBattleTracker.Model.Usage", "Usage")
+                        .WithMany()
+                        .HasForeignKey("UsageId");
+
                     b.Navigation("Slot");
+
+                    b.Navigation("Usage");
                 });
 
             modelBuilder.Entity("TableTopBattleTracker.Model.SpellcastingSpell", b =>

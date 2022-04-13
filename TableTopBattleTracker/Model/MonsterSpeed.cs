@@ -16,5 +16,9 @@ namespace TableTopBattleTracker.Model
 
         public int Value { get; set; }
 
+        public override string ToString()
+        {
+            return $"{SpeedType?.Name ?? nameof(MonsterSpeed)}: {Value}";
+        }
     }
 }

@@ -11,6 +11,11 @@ namespace TableTopBattleTracker.Model
         [StringLength(64)]
         public string? Type { get; set; }
 
-        public int Times { get; set; }
+        public int? Times { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Times}{Type}";
+        }
     }
 }

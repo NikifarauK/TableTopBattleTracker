@@ -32,5 +32,10 @@ namespace TableTopBattleTracker.Model
 
         public static string GetNameById(ESpeedType eSpeedType)
             => Names[(int)eSpeedType - 1];
+
+        public override string ToString()
+        {
+            return Name ?? nameof(SpeedType);
+        }
     }
 }

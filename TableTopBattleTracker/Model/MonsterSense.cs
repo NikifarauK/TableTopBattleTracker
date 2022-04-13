@@ -16,5 +16,10 @@ namespace TableTopBattleTracker.Model
 
         public int Distance { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Sense?.Name ?? nameof(MonsterSense)}: {Distance}";
+        }
+
     }
 }

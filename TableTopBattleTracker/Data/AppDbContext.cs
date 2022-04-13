@@ -13,6 +13,7 @@ namespace TableTopBattleTracker.Data
         public DbSet<Model.Action>? Actions { get; set; }
         public DbSet<ActionDamageType>? ActionDamageTypes { get; set; }
         public DbSet<ActionDCType>? ActionDCTypes { get; set; }
+        public DbSet<Allignment>? Allignment { get; set; }
         public DbSet<AreaOfEffect>? AreaOfEffects { get; set; }
         public DbSet<CastingComponent>? CastingComponents { get; set; }
         public DbSet<CastRange>? CastRanges { get; set; }
@@ -62,10 +63,50 @@ namespace TableTopBattleTracker.Data
                 .HasMany(a => a.DCTypes)
                 .WithMany(c => c.Actions)
                 .UsingEntity<ActionDCType>();
+
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Languages)
                 .WithMany(la => la.Characters)
                 .UsingEntity<MonsterLanguage>();
+            modelBuilder.Entity<Character>()
+                .HasOne(c => c.MonsterType)
+                .WithMany();
+            modelBuilder.Entity<Character>()
+                .HasOne(c => c.MonsterSize)
+                .WithMany();
+            modelBuilder.Entity<Character>()
+                .HasMany(c => c.ConditionImmunities)
+                .WithMany(s=> s.Characters)
+                .UsingEntity<ConditionImmunity>();
+            modelBuilder.Entity<Character>()
+                .HasOne(c => c.Allignment)
+                .WithMany();
+            
+            modelBuilder.Entity<MonsterProficiency>()
+                .HasOne(c => c.Proficiency)
+                .WithMany();
+
+            modelBuilder.Entity<DamageResistance>()
+                .HasOne(dr => dr.DamageType)
+                .WithMany();
+
+            modelBuilder.Entity<DamageVulnerabilitie>()
+                .HasOne(d => d.DamageType)
+                .WithMany();
+
+            modelBuilder.Entity<DamageImmunitie>()
+                .HasOne(dr => dr.DamageType)
+                .WithMany();
+
+            modelBuilder.Entity<ConditionImmunity>()
+                .HasOne(c => c.Condition)
+                .WithMany();
+
+
+            modelBuilder.Entity<SpecialAbility>()
+                .HasOne(sa => sa.Usage)
+                .WithMany();
+
             modelBuilder.Entity<Spell>()
                 .HasMany(s => s.CastingComponents)
                 .WithMany(cc => cc.Spells)
@@ -78,6 +119,10 @@ namespace TableTopBattleTracker.Data
                 .WithMany();
             modelBuilder.Entity<Spell>()
                 .HasOne(s=> s.CastTime)
+                .WithMany();
+
+            modelBuilder.Entity<SpellcastingSpell>()
+                .HasOne(sc => sc.Usage)
                 .WithMany();
 
             modelBuilder.Entity<ActionDamageType>()

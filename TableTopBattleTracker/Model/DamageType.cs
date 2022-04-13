@@ -58,5 +58,9 @@ namespace TableTopBattleTracker.Model
         public static EDamageType? GetDamageType(string damageTypeString)
             => (EDamageType?)(Names.IndexOf(damageTypeString) + 1);
 
+        public override string ToString()
+        {
+            return Name ?? nameof(DamageType);
+        }
     }
 }

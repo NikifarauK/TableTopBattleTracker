@@ -39,6 +39,8 @@ namespace TableTopBattleTracker.Model
 
         public string? Desc { get; set; }
 
+        public virtual ICollection<Character>? Characters { get; set; }
+
         public static List<string> Names { get; } = new()
         {
             "Ослеплен",
@@ -54,7 +56,7 @@ namespace TableTopBattleTracker.Model
             "Ничком",
             "Опутан",
             "Оглушен",
-            "Безсознания",
+            "Бессознателен",
             "Истощен x1",
             "Истощен x2",
             "Истощен x3",
@@ -65,5 +67,10 @@ namespace TableTopBattleTracker.Model
 
         public static string? GetNameById(ECondition eCondition)
             => Names[(int)eCondition - 1];
+
+        public override string ToString()
+        {
+            return Name ?? nameof(Condition);
+        }
     }
 }

@@ -61,5 +61,10 @@ namespace TableTopBattleTracker.Model
                 SpaceModifier = spaceModifier,
             };
         }
+
+        public override string ToString()
+        {
+            return Name ?? nameof(MonsterSize);
+        }
     }
 }

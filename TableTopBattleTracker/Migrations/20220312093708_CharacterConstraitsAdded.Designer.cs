@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TableTopBattleTracker.Data;
@@ -11,9 +12,10 @@ using TableTopBattleTracker.Data;
 namespace TableTopBattleTracker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220312093708_CharacterConstraitsAdded")]
+    partial class CharacterConstraitsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,23 +82,6 @@ namespace TableTopBattleTracker.Migrations
                     b.HasIndex("CharacteristicId");
 
                     b.ToTable("action_dc_types");
-                });
-
-            modelBuilder.Entity("TableTopBattleTracker.Model.Allignment", b =>
-                {
-                    b.Property<int>("AllignmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AllignmentId"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("AllignmentId");
-
-                    b.ToTable("allignment");
                 });
 
             modelBuilder.Entity("TableTopBattleTracker.Model.AreaOfEffect", b =>
@@ -173,8 +158,9 @@ namespace TableTopBattleTracker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CharacterId"));
 
-                    b.Property<int?>("AllignmentId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Allignment")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<int>("ArmorClass")
                         .HasColumnType("integer");
@@ -227,8 +213,6 @@ namespace TableTopBattleTracker.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("CharacterId");
-
-                    b.HasIndex("AllignmentId");
 
                     b.HasIndex("MonsterSizeId");
 
@@ -647,9 +631,6 @@ namespace TableTopBattleTracker.Migrations
                     b.Property<int?>("CharacterId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Desc")
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -658,7 +639,7 @@ namespace TableTopBattleTracker.Migrations
                     b.Property<int?>("SpellcastingId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UsageId")
+                    b.Property<int>("UsageId")
                         .HasColumnType("integer");
 
                     b.HasKey("SpecialAbilityId");
@@ -769,6 +750,10 @@ namespace TableTopBattleTracker.Migrations
 
                     b.Property<int>("Modifier")
                         .HasColumnType("integer");
+
+                    b.Property<string>("School")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
                     b.HasKey("SpellcastingId");
 
@@ -905,7 +890,7 @@ namespace TableTopBattleTracker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UsageId"));
 
-                    b.Property<int?>("Times")
+                    b.Property<int>("Times")
                         .HasColumnType("integer");
 
                     b.Property<string>("Type")
@@ -957,10 +942,6 @@ namespace TableTopBattleTracker.Migrations
 
             modelBuilder.Entity("TableTopBattleTracker.Model.Character", b =>
                 {
-                    b.HasOne("TableTopBattleTracker.Model.Allignment", "Allignment")
-                        .WithMany()
-                        .HasForeignKey("AllignmentId");
-
                     b.HasOne("TableTopBattleTracker.Model.MonsterSize", "MonsterSize")
                         .WithMany()
                         .HasForeignKey("MonsterSizeId")
@@ -970,8 +951,6 @@ namespace TableTopBattleTracker.Migrations
                     b.HasOne("TableTopBattleTracker.Model.MonsterType", "MonsterType")
                         .WithMany()
                         .HasForeignKey("MonsterTypeId");
-
-                    b.Navigation("Allignment");
 
                     b.Navigation("MonsterSize");
 
@@ -1173,7 +1152,9 @@ namespace TableTopBattleTracker.Migrations
 
                     b.HasOne("TableTopBattleTracker.Model.Usage", "Usage")
                         .WithMany()
-                        .HasForeignKey("UsageId");
+                        .HasForeignKey("UsageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Spellcasting");
 

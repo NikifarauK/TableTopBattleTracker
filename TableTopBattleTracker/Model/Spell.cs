@@ -38,7 +38,7 @@ namespace TableTopBattleTracker.Model
 
         public ECharacteristic? DC { get; set; }
 
-        public virtual ICollection<SpellDamage>? SpellDamage { get; set; }
+        public virtual ICollection<SpellDamage>? SpellDamages { get; set; }
 
         public EAreaType? AreaOfEffectId{ get; set; }
         public virtual AreaOfEffect? AreaOfEffect { get; set; }
@@ -49,5 +49,9 @@ namespace TableTopBattleTracker.Model
         public int SpellSchoolId { get; set; }
         public virtual SpellSchool? SpellSchool { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Name}/lvl:{Level}";
+        }
     }
 }

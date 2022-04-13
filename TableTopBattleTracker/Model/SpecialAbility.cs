@@ -11,8 +11,12 @@ namespace TableTopBattleTracker.Model
         [Required, StringLength(64)]
         public string? Name { get; set; }
 
+        public string? Desc { get; set; }
+
+        //public int? Value { get; set; }
+
         [ForeignKey(nameof(Usage))]
-        public int UsageId { get; set; }
+        public int? UsageId { get; set; }
         public virtual Usage? Usage { get; set; }
                 
         [ForeignKey(nameof(Spellcasting))]

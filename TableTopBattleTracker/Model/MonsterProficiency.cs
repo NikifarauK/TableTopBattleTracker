@@ -15,5 +15,10 @@ namespace TableTopBattleTracker.Model
         public virtual Proficiency? Proficiency { get; set; }
 
         public int Modifier { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Proficiency?.Name ?? nameof(MonsterProficiency)}: +{Modifier}";
+        }
     }
 }
